@@ -1,6 +1,12 @@
+/**
+ * @Purpose : Node.js web application framework
+ **/
 const express = require('express');
 const app = express();
 
+/**
+ * @Purpose : Node.js web application framework
+ **/
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -11,30 +17,29 @@ app.use(expressValidator());
 const mongoose = require('mongoose');
 const route = require('../backend_Server/router/router');
 
-const logger = require('morgan');
-app.use(logger('dev'));
+const cors = require('cors');
+app.use(cors())
+
+/**
+ * @Purpose : Calling router
+ **/
+
+app.use('/', route);
 
 var server = app.listen(3000, () => {
     console.log("Server is listening to port 3000");
 })
 
 /**
- * @Purpose : Calling router
+ * @Purpose : Connection to the mongo database
  **/
-app.use('/', route);
-
-app.use(express.static('frontend_Client'));
-
-const cors = require('cors');
-app.use(cors())
-
-const dbConfig = require('./config/database.config');
-
 app.use(express.static('../frontend_Client'));
 
 /**
  * @Purpose : Connection to the mongo database
  **/
+const dbConfig = require('./config/database.config');
+
 mongoose.connect(dbConfig.url, {
     useNewUrlParser: true
 }).then(() => {

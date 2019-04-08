@@ -19,3 +19,23 @@ exports.login = (req, callback) => {
         }
     })
 }
+
+exports.forgotPassword = (req, callback) => {
+    userModel.forgotPassword(req, (err, data) => {
+        if (err) {
+            return callback(err);
+        } else {
+            return callback(null, data);
+        }
+    })
+}
+
+exports.resetPassword = (req, callback) => {
+    userModel.resetPassword(req, (err, data) => {
+        if (err) {
+            return callback(err);
+        } else {
+            return callback(null, data);
+        }
+    })
+}

@@ -5,14 +5,13 @@
         <img src="../assets//login_logo.jpg">
     </div>
     <div class="form">
-        <input type="email" name="email" placeholder=" Email" required />
-        <input type="password" name="password" placeholder=" Password" required />
-        <button type="submit" name="submit">login</button>
+        <input type="email" name="email" placeholder=" Email" ng-model="email" />
+        <input type="password" name="password" placeholder=" Password" ng-model="password" />
+        <button type="submit" value="login" ng-click="login()" class="login-button">Sign in</button>
         <p class="message">
-            <!-- <span ui-sref="forgotPassword"> -->
-                <a href="./forgotPassword.html">Forgot password ?</a>
-            <!-- </span> -->
+            <a ui-sref="forgotPassword">Forgot password ?</a>
         </p>
-        Not registered ? <a href="./registrationForm.html">Create an account</a>
+        <!-- Not registered ? <a href="./registrationForm.html">Create an account</a> -->
+        Not registered ? <a ui-sref="registrationForm">Sign Up</a>
     </div>
 </div>
