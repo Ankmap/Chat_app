@@ -5,7 +5,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt')
 const saltRounds = 10;
-// var access = require('../../authentication/token')
 
 /**
  * @Purpose : Define a schema
@@ -13,7 +12,7 @@ const saltRounds = 10;
  **/
 var mongoSchema = mongoose.Schema;
 var userSchema = new mongoSchema({
-    "name": { type: String, required: [true, "First name is required"] },
+    "name": { type: String, required: [true, "Name is required"] },
     "email": { type: String, required: [true, "Email is required"] },
     "password": { type: String, required: [true, "password is required"] }
 },
@@ -38,7 +37,6 @@ function hash(password) {
 usermodel.prototype.register = (body, callback) => {
     user.find({ 'email': body.email }, (err, data) => {
         if (err) {
-            // console.log("user already present");
             return callback(err);
         } else if (data.length > 0) {
             response = {
@@ -54,7 +52,7 @@ usermodel.prototype.register = (body, callback) => {
                 "email": body.email,
                 "password": hash(body.password)
             });
-            
+
             newUser.save((err, result) => {
                 if (err) {
                     console.log("error in model file", err);
@@ -75,14 +73,15 @@ usermodel.prototype.login = (body, callback) => {
             callback(err);
         } else if (data != null) {
             //console.log(data);
+            console.log('------------- Before comparing password');
+
             bcrypt.compare(body.password, data.password).then(function (res) {
                 if (res) {
-                    console.log("login successfully");
-
+                    console.log("login successfully", data);
                     /**
-                     * @Purpose : If credentials are correct, return the data object
+                     * @Purpose : If credentials are correct, return the data object and res
                      **/
-                    callback(null, data);
+                    callback(null, res);
                 }
                 else {
                     console.log("Incorrect password");
@@ -97,26 +96,63 @@ usermodel.prototype.login = (body, callback) => {
     });
 }
 usermodel.prototype.forgotPassword = (body, callback) => {
-     var email1 = body.email
-     user.find({ "email": email1 }, (err, data) => {
-         if (err) {
-             return callback(err);
-         } else if (data){
-             return callback(null, data)
-         }
-         else {
-             return callback("Invalid User ");
-         }
-     });
- }
+    var email1 = body.email
+    user.find({ "email": email1 }, (err, data) => {
+        if (err) {
+            return callback(err);
+        } else if (data) {
+            return callback(null, data)
+        }
+        else {
+            return callback("Invalid User ");
+        }
+    });
+}
 
-usermodel.prototype.resetPassword  = (body, callback) => {
-    const email = body.email
-    user.find({'email':email}).then(function(data){
-        if(!data){
-            console.log(data)
-            return callback('No user found with that email address');
+usermodel.prototype.resetPassword = (body, callback) => {
+    var password = hash(body.password)
+    user.updateOne({password : password},(error,result)=>{
+        if(error){
+            callback(error);
+        }else{
+            console.log(result);
+            //console.log('Password Updated successfully.')
+            callback(null,result);
+            // const myData = new user(password);
+            // myData.save()
+            //   .then(item => {
+            //     callback("item saved to database");
+            //   })
+            //   .catch(err => {
+            //     callback("unable to save to database");
+            //   });
+            const newUser = new user(password);
+            newUser.save(function(err,res){
+                if(err){
+                    return res;
+                }else{
+                    console.log(res);
+                }
+            })
         }
     })
 }
+
+
+
+usermodel.prototype.data = (req, callback) => {
+    user.find({}, (err, data) => {
+        if (err) {
+            response = {
+                "error": true,
+                "message": "Error retriving data",
+                "err": err
+            };
+            return callback(response)
+        } else {
+            callback(null, data);
+        }
+    })
+}
+
 module.exports = new usermodel();

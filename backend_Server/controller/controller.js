@@ -1,6 +1,6 @@
 var userService = require('../services/userService');
 var access = require('../authentication/token');
-var jwt = require('jsonwebtoken');
+
 module.exports.register = (req, res) => {
     req.checkBody('name', 'name is not valid').notEmpty();
     req.checkBody('email', 'Email is not valid').isEmail();
@@ -13,7 +13,7 @@ module.exports.register = (req, res) => {
         response.success = false;
         response.error = errors;
         return res.status(422).send({
-            message :errors
+            message: errors
         });
     }
     else {
@@ -43,12 +43,6 @@ module.exports.login = (req, res) => {
         else {
             response.success = true;
             response.data = data;
-            // const payload = {
-            //     user_id: data[0]._id
-            // }
-            // const token =  access.generateToken(payload);
-            // console.log(token);
-            // var token = jwt.sign({ email: req.body.email, id: data[0]._id }, secret, { expiresIn: 120 });
             res.status(200).send({
                 message: data,
                 // "token": token
@@ -57,7 +51,7 @@ module.exports.login = (req, res) => {
     })
 }
 
-module.exports.forgotPassword = (req, res) =>{
+module.exports.forgotPassword = (req, res) => {
     var response = {};
     userService.forgotPassword(req.body, (err, data) => {
         if (err) {
@@ -71,30 +65,43 @@ module.exports.forgotPassword = (req, res) =>{
             const payload = {
                 user_id: data[0]._id
             }
-            const token =  access.generateToken(payload);
-           // console.log(token);
+            const token = access.generateToken(payload);
+            // console.log(token);
+            const url = `http://localhost:3000/resetPassword => ${token.token}`;
+            //console.log( url);
             res.status(200).send({
                 message: data,
-                "token": token
+                "token": token,
+                "url": url
             });
         }
     })
 }
 
-module.exports.resetPassword = (req, res) =>{
-    var response = {};
+module.exports.resetPassword = (req, res) => {
     userService.resetPassword(req.body, (err, data) => {
+        var response = {};
         if (err) {
             response.success = false;
             response.error = err;
             res.status(500).send(response);
-        }
-        else {
+        } else {
             response.success = true;
             response.data = data;
             res.status(200).send(response);
         }
-    }) 
+    });
 }
-
-
+module.exports.data = (req, res) => {
+    userService.data(req, (err, data) => {
+        var response = {};
+        if (err) {
+            return callback(err);
+        } else {
+            //  console.log(data);
+            response.success = true;
+            response.result = data;
+            res.status(200).send(response);
+        }
+    })
+}

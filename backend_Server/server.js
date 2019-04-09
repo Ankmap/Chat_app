@@ -17,8 +17,8 @@ app.use(expressValidator());
 const mongoose = require('mongoose');
 const route = require('../backend_Server/router/router');
 
-const cors = require('cors');
-app.use(cors())
+//const cors = require('cors');
+//app.use(cors())
 
 /**
  * @Purpose : Calling router
