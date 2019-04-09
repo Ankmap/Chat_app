@@ -1,4 +1,4 @@
-app.controller('controllerRegister', function ($scope) {
+app.controller('controlregistrationForm', function ($scope) {
     $scope.login = function () {
         var data = {
             'name':$scope.name,

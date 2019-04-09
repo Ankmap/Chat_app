@@ -73,8 +73,7 @@ usermodel.prototype.login = (body, callback) => {
             callback(err);
         } else if (data != null) {
             //console.log(data);
-            console.log('------------- Before comparing password');
-
+            console.log('------------- Before comparing password'); 
             bcrypt.compare(body.password, data.password).then(function (res) {
                 if (res) {
                     console.log("login successfully", data);
@@ -110,30 +109,17 @@ usermodel.prototype.forgotPassword = (body, callback) => {
 }
 
 usermodel.prototype.resetPassword = (body, callback) => {
-    var password = hash(body.password)
-    user.updateOne({password : password},(error,result)=>{
+    var pass = hash(body.password)
+    var newPassword =  hash(pass)
+    console.log("Before Update "+pass)
+    console.log("After update"+newPassword)
+    user.update({pass : newPassword},(error,result)=>{
         if(error){
             callback(error);
         }else{
             console.log(result);
             //console.log('Password Updated successfully.')
             callback(null,result);
-            // const myData = new user(password);
-            // myData.save()
-            //   .then(item => {
-            //     callback("item saved to database");
-            //   })
-            //   .catch(err => {
-            //     callback("unable to save to database");
-            //   });
-            const newUser = new user(password);
-            newUser.save(function(err,res){
-                if(err){
-                    return res;
-                }else{
-                    console.log(res);
-                }
-            })
         }
     })
 }

@@ -1,3 +1,4 @@
+
 /**
  * @Purpose : Node.js web application framework
  **/
@@ -17,8 +18,8 @@ app.use(expressValidator());
 const mongoose = require('mongoose');
 const route = require('../backend_Server/router/router');
 
-//const cors = require('cors');
-//app.use(cors())
+const cors = require('cors');
+app.use(cors())
 
 /**
  * @Purpose : Calling router
@@ -48,4 +49,26 @@ mongoose.connect(dbConfig.url, {
     console.log("Could not connect to the database....!");
     process.exit();
 });
+/*-----------------------------------------Socket Connection --------------------------------------------------*/
 
+/**
+ *@Purpose : To include the HTTP module
+**/ 
+const http = require('http');
+/**
+ *@Purpose : Imporing socket io to get connection between client and server 
+**/
+var socketIO = require('socket.io');
+
+const io = require('socket.io')(server);
+
+
+/**
+ * @Purpose : checking for events. connecton will be listening for incoming sockets.
+**/
+io.on('connection', function (socket) {
+    console.log("Connected socket!");
+    socket.on('disconnect', function () {
+        console.log("Socket Disconnected!")
+    });
+});

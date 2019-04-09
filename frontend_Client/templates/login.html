@@ -1,11 +1,18 @@
 <link rel="stylesheet" href="../css/login.css">
+<script>
+    function Ctrl($scope) {
+        $scope.text = 'me@example.com';
+        $scope.emailFormat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
+    }
+</script>
 <div class="login-page">
     <h1>Account Login</h1>
     <div class="logo">
         <img src="../assets//login_logo.jpg">
     </div>
     <div class="form">
-        <input type="email" name="email" placeholder=" Email" ng-model="email" />
+        <input type="email" name="email" placeholder=" Email" ng-model="email" ng-pattern="emailFormat"/>
+        <span ng-show="myForm.user.$error.required">Username is required.</span>
         <input type="password" name="password" placeholder=" Password" ng-model="password" />
         <button type="submit" value="login" ng-click="login()" class="login-button">Sign in</button>
         <p class="message">
