@@ -1,6 +1,6 @@
 var userService = require('../services/userService');
 var access = require('../authentication/token');
-
+var sendmail = require('../middleware/senemail') 
 module.exports.register = (req, res) => {
     req.checkBody('name', 'name is not valid').notEmpty();
     req.checkBody('email', 'Email is not valid').isEmail();
@@ -52,27 +52,32 @@ module.exports.login = (req, res) => {
 }
 
 module.exports.forgotPassword = (req, res) => {
-    var response = {};
     userService.forgotPassword(req.body, (err, data) => {
+        var response = {};
         if (err) {
-            response.success = false;
-            response.error = err;
-            res.status(500).send(response);
+            return res.status(500).send({
+                message: err
+            });
         }
         else {
             response.success = true;
             response.data = data;
+            console.log("Data", data[0]._id);
+
             const payload = {
                 user_id: data[0]._id
             }
+
             const token = access.generateToken(payload);
             // console.log(token);
-            const url = `http://localhost:3000/resetPassword => ${token.token}`;
+            const url = `http://localhost:3000/resetPassword${token.token}`;
+
+            sendmail.sendEMailFunction(url);
             //console.log( url);
             res.status(200).send({
-                message: data,
-                "token": token,
-                "url": url
+                status:true,    
+                message: "Reset password sent to your register email",
+                Url:url
             });
         }
     })
@@ -88,6 +93,7 @@ module.exports.resetPassword = (req, res) => {
         } else {
             response.success = true;
             response.data = data;
+            response.message = "Password updated Successfully";
             res.status(200).send(response);
         }
     });

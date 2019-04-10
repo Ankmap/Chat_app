@@ -1,4 +1,4 @@
-app.controller('controlLogin', function ($scope) {
+app.controller('controlLogin', function ($scope,servicesLogin) {
     // console.log("hiiii")
     // $scope.myname="Ankita";
     $scope.login = function () {
@@ -6,5 +6,6 @@ app.controller('controlLogin', function ($scope) {
             'email': $scope.email,
             'password': $scope.password
         }
+        servicesLogin.login(data, $scope);
     }
 });

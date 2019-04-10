@@ -62,11 +62,12 @@ var socketIO = require('socket.io');
 
 const io = require('socket.io')(server);
 
-
+//console.log("HAHHAHAHAHAHAHAHHA");
 /**
  * @Purpose : checking for events. connecton will be listening for incoming sockets.
 **/
 io.on('connection', function (socket) {
+    console.log("HAHHAHAHAHAHAHAHHA");
     console.log("Connected socket!");
     socket.on('disconnect', function () {
         console.log("Socket Disconnected!")

@@ -28,6 +28,11 @@ app.config(function($stateProvider, $urlRouterProvider){
         templateUrl: 'templates/registrationForm.html',
         controller: 'controlregistrationForm'
     })
+    .state('dashboard',{
+        url: '/dashboard',
+        templateUrl: 'templates/dashboard.html',
+        // controller: 'controlregistrationForm'
+    })
 
      $urlRouterProvider.otherwise('login');
 
