@@ -89,7 +89,7 @@ module.exports.resetPassword = (req, res) => {
     userService.resetPassword(req.body, (err, data) => {
         console.log(password = req.body);
         var response = {};
-        if (!err) {
+        if (err) {
             response.success = false;
             response.error = err;
             res.status(500).send(response);

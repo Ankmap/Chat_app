@@ -108,7 +108,7 @@ usermodel.prototype.forgotPassword = (body, callback) => {
 }
 usermodel.prototype.resetPassword  = (body, callback) => {
     newPassword = hash(body.password);
-    user.updateOne({user_id: body._id},{"password":newPassword}, function(err,result) {
+    user.updateOne({user_id: body._id},{password:newPassword}, function(err,result) {
         if(err){
             return callback(err);
         }else{
