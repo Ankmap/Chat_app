@@ -1,5 +1,5 @@
 app.service('servicesLogin', function ($http, $location) {
-    console.log('army')
+    // console.log('army_love')
     this.login = function (data, $scope) {
         // Simple POST request example:
         $http({
@@ -9,24 +9,18 @@ app.service('servicesLogin', function ($http, $location) {
         }).then(
             // this function will be called when the request is success
             function successCallback(response) {
-                console.log('554545454545')
-                console.log("Login successfully ");
-                // var user_id = response.data.message[0]._id;
-                // var name = response.data.message[0].name;
-
-                // localStorage.setItem("userid", user_id);
-                // localStorage.setItem("name", name);
-                
+                console.log("Login successfully......!");
+                alert("Login successfully......!");
                 $location.path('dashboard');
-                $scope.loginMessage = "login successfully";
+                $scope.loginMessage = "Login successfully......";
             },
             // this function will be called when the request returned error status
             function errorCallback(response) {
                 console.log('EmailId or Password Incorrect....! ')
                 alert("EmailId or Password Incorrect");
                 console.log(response);
-                $scope.loginMessage = 'EmailId or Password Incorrect....! ';
+                $scope.loginMessage = 'EmailId or Password Incorrect....';
             }
         );
     }
-});
+});  

@@ -41,7 +41,7 @@ usermodel.prototype.register = (body, callback) => {
         } else if (data.length > 0) {
             response = {
                 "error": true,
-                "message": "Email already exists ",
+                "message": "Email_Id already exists ",
                 "errorCode": 404
             };
             return callback(response);
@@ -55,10 +55,9 @@ usermodel.prototype.register = (body, callback) => {
 
             newUser.save((err, result) => {
                 if (err) {
-                    console.log("error in model file", err);
                     return callback(err);
                 } else {
-                    console.log("data save successfully", result);
+                    console.log("Data saved successfully..!", result);
                     return callback(null, result);
                 }
             })
@@ -107,33 +106,16 @@ usermodel.prototype.forgotPassword = (body, callback) => {
         }
     });
 }
-
-usermodel.prototype.resetPassword = (body, callback) => {
-    
-    var newPassword =  hash(body.password)
-    user.find({"email":body.email},(error,result)=>{
-        if(error){
-            console.log("errrrrrrrr");
-            
-            callback(error);
+usermodel.prototype.resetPassword  = (body, callback) => {
+    newPassword = hash(body.password);
+    user.updateOne({user_id: body._id},{"password":newPassword}, function(err,result) {
+        if(err){
+            return callback(err);
         }else{
-            console.log("ssssssssssssssssssssssss");
-            console.log(body.email);
-            
-            user.updateOne({email:body.email},{password : newPassword},(err,result)=>{
-                if(err){
-                    callback(err);
-                }else{
-            
-            console.log(result);
-            console.log('Password Updated successfully.')
-            callback(null,result);
+            return callback(result);
         }
     })
 }
-})
-
-
 
 usermodel.prototype.data = (req, callback) => {
     user.find({}, (err, data) => {
@@ -149,6 +131,6 @@ usermodel.prototype.data = (req, callback) => {
         }
     })
 }
-}
+
 
 module.exports = new usermodel();

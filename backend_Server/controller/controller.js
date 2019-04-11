@@ -1,6 +1,6 @@
 var userService = require('../services/userService');
 var access = require('../authentication/token');
-var sendmail = require('../middleware/senemail') 
+var sendmail = require('../middleware/senemail')
 module.exports.register = (req, res) => {
     req.checkBody('name', 'name is not valid').notEmpty();
     req.checkBody('email', 'Email is not valid').isEmail();
@@ -13,7 +13,8 @@ module.exports.register = (req, res) => {
         response.success = false;
         response.error = errors;
         return res.status(422).send({
-            message: errors
+            status: false,
+            message: "Please enter the correct data..!"
         });
     }
     else {
@@ -25,7 +26,8 @@ module.exports.register = (req, res) => {
                 })
             } else {
                 return res.status(200).send({
-                    message: data
+                    status: true,
+                    message: 'Account created sucessfully,,,!'
                 });
             }
         });
@@ -70,14 +72,14 @@ module.exports.forgotPassword = (req, res) => {
 
             const token = access.generateToken(payload);
             // console.log(token);
-            const url = `http://localhost:3000/resetPassword${token.token}`;
+            const url = `http://localhost:3000/resetPassword/${token.token}`;
 
             sendmail.sendEMailFunction(url);
             //console.log( url);
             res.status(200).send({
-                status:true,    
+                status: true,
                 message: "Reset password sent to your register email",
-                Url:url
+                Url: url
             });
         }
     })
@@ -85,8 +87,9 @@ module.exports.forgotPassword = (req, res) => {
 
 module.exports.resetPassword = (req, res) => {
     userService.resetPassword(req.body, (err, data) => {
+        console.log(password = req.body);
         var response = {};
-        if (err) {
+        if (!err) {
             response.success = false;
             response.error = err;
             res.status(500).send(response);

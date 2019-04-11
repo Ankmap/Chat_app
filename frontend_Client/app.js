@@ -33,10 +33,7 @@ app.config(function($stateProvider, $urlRouterProvider){
         templateUrl: 'templates/dashboard.html',
         // controller: 'controlregistrationForm'
     })
-
      $urlRouterProvider.otherwise('login');
-
-    
 });
 app.service('SocketService', ['socketFactory', function SocketService(socketFactory){
     return socketFactory({

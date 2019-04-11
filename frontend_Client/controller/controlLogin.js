@@ -1,5 +1,6 @@
+//console.log("hiiii")
 app.controller('controlLogin', function ($scope,servicesLogin) {
-    // console.log("hiiii")
+    //console.log("bappa")
     // $scope.myname="Ankita";
     $scope.login = function () {
         var data = {

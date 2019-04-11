@@ -6,11 +6,11 @@
 <div id="login-box">
     <div class="main">
         <h1>Create new Account</h1><br><br>
-        <input type="text" name="name" placeholder="Enter ur name"/>
-        <input type="text" name="email" placeholder="Enter ur email"/>
-        <input type="text" name="password" placeholder="Enter the password"/>
-        <input type="text" name="confirmPassword" placeholder="confirm Password"/>
-        <input type="submit" name="register_submit" value="Register" />
+        <input type="text" name="name" placeholder="Enter ur name" ng-model="name"/>
+        <input type="text" name="email" placeholder="Enter ur email" ng-model="email"/>
+        <input type="password" name="password" placeholder="Enter the password" ng-model="password"/>
+        <input type="password" name="confirmPassword" placeholder="confirm Password" ng-model="confirmPassword"/>
+        <input type="submit" name="register_submit" value="Register" ng-click="registrationForm()"/>
         <p class="message">
             Already have an account ?
             <span ui-sref="login"><a href="">Sign in</a> </span>

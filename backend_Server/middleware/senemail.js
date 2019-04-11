@@ -13,7 +13,7 @@ exports.sendEMailFunction = (url, ) => {
             from: 'bridgecap0103@gmail.com',// sender address
             to: 'bridgecap0103@gmail.com ',// list of receivers
             subject: 'Chat-app password reset link ',// Subject line
-            text: 'Please go through the e-mail verifaction link provided in this mail:\n' + url// plain text body
+            text: 'Please go through the e-mail verifaction link provided in this mail:\n' + url
         };
         transporter.sendMail(mailOptions, function (err, info) {
             if (err) {
