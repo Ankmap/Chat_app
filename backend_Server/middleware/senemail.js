@@ -1,3 +1,6 @@
+/**
+ * @Purpose : nodemailer to send mail
+**/
 var nodemailer = require('nodemailer');
 
 exports.sendEMailFunction = (url, ) => {
@@ -5,15 +8,15 @@ exports.sendEMailFunction = (url, ) => {
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'bridgecap0103@gmail.com',
-                pass: 'Bridge@0103'
+                user: 'bridgecap0103@gmail.com', // Email Account
+                pass: 'Bridge@0103' // Email Account Password
             },
         });
         var mailOptions = {
-            from: 'bridgecap0103@gmail.com',// sender address
-            to: 'bridgecap0103@gmail.com ',// list of receivers
-            subject: 'Chat-app password reset link ',// Subject line
-            text: 'Please go through the e-mail verifaction link provided in this mail:\n' + url
+            from: 'bridgecap0103@gmail.com', // sender address
+            to: 'bridgecap0103@gmail.com ', // list of receiver
+            subject: 'Chat-app password reset link ', // Subject line
+            text: 'Please go through the e-mail verifaction link provided in this mail:\n' + url // Text line
         };
         transporter.sendMail(mailOptions, function (err, info) {
             if (err) {

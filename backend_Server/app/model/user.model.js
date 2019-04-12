@@ -1,24 +1,30 @@
 /**
- * @Purpose : 1) Mongoose is an Object Data Modeling (ODM) library for MongoDB and Node.js. 
- *            2) Hash plain password and store hashed password in database
- **/
+ * @Purpose : 1) Required file
+ *            2) Mongoose is an Object Data Modeling (ODM) library for MongoDB and Node.js. 
+**/
 const mongoose = require('mongoose');
+/**
+ * @Purpose : 1) Bcrypt is used for hash plain password and store hashed password in database.
+ *            2) "salt round" mean the cost factor. 
+ **/
 const bcrypt = require('bcrypt')
 const saltRounds = 10;
-
 /**
  * @Purpose : Define a schema
- * 1) Schema maps to a MongoDB collection.
+ *            1) Schema maps to a MongoDB collection.
  **/
 var mongoSchema = mongoose.Schema;
+/**
+ * @Purpose : Schema constructor.
+ **/
 var userSchema = new mongoSchema({
     "name": { type: String, required: [true, "Name is required"] },
     "email": { type: String, required: [true, "Email is required"] },
     "password": { type: String, required: [true, "password is required"] }
 },
-    // {
-    //     timestamps: true
-    // }
+    {
+        timestamps: true
+    }
 );
 function usermodel() {
 }
@@ -27,18 +33,24 @@ function usermodel() {
  **/
 var user = mongoose.model('user', userSchema);
 /**
- * @Purpose : Store hashed password in database
+ * @Purpose : Encrypt the given password
  **/
 function hash(password) {
     var hash = bcrypt.hashSync(password, saltRounds);
     return hash;
 }
-
+/**
+ * @Purpose : For register a new account
+ *            1)  A callback function is called at the completion of a given task.
+**/
 usermodel.prototype.register = (body, callback) => {
     user.find({ 'email': body.email }, (err, data) => {
         if (err) {
             return callback(err);
         } else if (data.length > 0) {
+            /**
+             * @Purpose : It checks the given email is already registred or not.
+             **/
             response = {
                 "error": true,
                 "message": "Email_Id already exists ",
@@ -52,7 +64,9 @@ usermodel.prototype.register = (body, callback) => {
                 "email": body.email,
                 "password": hash(body.password)
             });
-
+            /**
+             * @Purpose : It saves the data to the database.
+             **/
             newUser.save((err, result) => {
                 if (err) {
                     return callback(err);
@@ -64,18 +78,22 @@ usermodel.prototype.register = (body, callback) => {
         }
     });
 }
-
+/**
+ * @Purpose : For login an account
+**/
 usermodel.prototype.login = (body, callback) => {
+    /**
+    * @Purpose : It find the email in the database.
+    **/
     user.findOne({ "email": body.email }, (err, data) => {
         //   console.log(data);
         if (err) {
             callback(err);
         } else if (data != null) {
-            //console.log(data);
-            //console.log('------------- Before comparing password'); 
+            console.log('------------- Before comparing password -------------'); 
             bcrypt.compare(body.password, data.password).then(function (res) {
                 if (res) {
-                    console.log("login successfully", data);
+                    console.log("Login successfully...!");
                     /**
                      * @Purpose : If credentials are correct, return the data object and res
                      **/
@@ -93,30 +111,44 @@ usermodel.prototype.login = (body, callback) => {
         }
     });
 }
+/**
+ * @Purpose : For forgotPassword
+**/
 usermodel.prototype.forgotPassword = (body, callback) => {
+    /**
+     * @Purpose : Store body.email in email1
+    **/
     var email1 = body.email
     user.find({ "email": email1 }, (err, data) => {
+        //   console.log(data);
+        var response = {}
         if (err) {
-            return callback(err);
-        } else if (data) {
+            response ={
+                status : false,
+                message :'Invalid User'
+            }
+            return callback(response);
+        } else{
             return callback(null, data)
-        }
-        else {
-            return callback("Invalid User ");
         }
     });
 }
-usermodel.prototype.resetPassword  = (body, callback) => {
+/**
+ * @Purpose : For resetPassword
+**/
+usermodel.prototype.resetPassword = (body, callback) => {
     newPassword = hash(body.password);
-    user.updateOne({user_id: body._id},{password:newPassword}, function(err,result) {
-        if(err){
+    user.updateOne({ user_id: body._id }, { password: newPassword }, function (err, result) {
+        if (err) {
             return callback(err);
-        }else{
+        } else {
             return callback(result);
         }
     })
 }
-
+/**
+ * @Purpose : Get all data
+**/
 usermodel.prototype.data = (req, callback) => {
     user.find({}, (err, data) => {
         if (err) {
@@ -131,6 +163,7 @@ usermodel.prototype.data = (req, callback) => {
         }
     })
 }
-
-
+/**
+ * @Purpose : export usermodel
+**/
 module.exports = new usermodel();
