@@ -9,7 +9,7 @@ app.service('servicesResetPassword', function ($http, $location) {
                 alert("Your password has been successful reset, you can now login with your new password.!");
                 console.log(response);
                 $scope.message = "Your password has been successful reset, you can now login with your new password.!";
-                $location.path('/login');
+                //$location.path('/login');
             },
             function errorCallback(response) {
                 alert("reset password Unsuccessfully..! ");

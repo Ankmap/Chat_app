@@ -3,7 +3,7 @@
  */
 var userService = require('../services/userService');
 var access = require('../authentication/token');
-var sendmail = require('../middleware/senemail')
+var sendmail = require('../middleware/senemail');
 /**
  * @Purpose : For register a new account
 **/
@@ -67,6 +67,7 @@ module.exports.login = (req, res) => {
 **/
 module.exports.forgotPassword = (req, res) => {
     userService.forgotPassword(req.body, (err, data) => {
+        console.log(req.body.email)
         var response = {};
         if (err) {
             return res.status(500).send({
@@ -88,12 +89,12 @@ module.exports.forgotPassword = (req, res) => {
              * @Purpose : Store  generateToken in token variable
             **/
             const token = access.generateToken(payload);
-            // console.log(token);
-            const url = `http://localhost:3000/resetPassword/${token.token}`;
+            console.log(token);
+            const url = `http://localhost:3000/#/resetPassword/${token.token}`;
             /**
              * @Purpose : Send Email
             **/
-            sendmail.sendEMailFunction(url);
+            sendmail.sendEMailFunction(req.body.email,url);
             //console.log( url);
             res.status(200).send({
                 status: true,
