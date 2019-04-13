@@ -46,7 +46,7 @@ exports.resetPassword = (req, callback) => {
         if (err) {
             return callback(err);
         } else {
-            return callback(null, result);
+            return callback(null,result);
         }
     });
 }

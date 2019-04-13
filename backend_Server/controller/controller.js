@@ -124,7 +124,7 @@ module.exports.resetPassword = (req, res) => {
             });
         }
         else {
-            if (!err) {
+            if (err) {
                 response.success = false;
                 response.error = err;
                 res.status(500).send(response);

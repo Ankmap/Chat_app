@@ -3,8 +3,7 @@
  */
 const express = require('express');
 const router = express.Router();
-const controller = require('../controller/controller')
-const decode = require('../authentication/decode')
+const controller = require('../controller/controller');
 
 try {
     /**
@@ -26,11 +25,7 @@ try {
     /**
      * @Purpose : GetAllUser
      **/
-    router.get('/getAllUser', decode, controller.data);
-    /**
-     * @Purpose : Authentication
-     **/
-    router.use('/auth', decode);
+    router.get('/getAllUser', controller.data);
 } catch (err) {
     console.log(err);
 }

@@ -10,12 +10,8 @@ app.service('servicesForgotPassword', function ($http, $location) {
         }).then(
             function successCallback(response,token) {
                 alert("Password sent to your register email successfully....!");
-                console.log("response==========>",response);
                 //console.log('army_love');
                 localStorage.setItem("token",token);
-                console.log('army_love');
-              //  $location.path('/resetPassword');
-                $scope.loginMessage = "Password sent to your register email successfully....!";
             },
             function errorCallback(response) {
                 console.log("Password sent to your register email Unsuccessfully....!");

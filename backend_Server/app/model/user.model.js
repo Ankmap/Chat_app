@@ -142,7 +142,7 @@ usermodel.prototype.resetPassword = (body, callback) => {
         if (err) {
             return callback(err);
         } else {
-            return callback(result);
+            return callback(null,result);
         }
     })
 }

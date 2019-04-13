@@ -10,13 +10,10 @@ app.service('servicesRegistration', function ($http, $location) {
         }).then(
             function successCallback(response) {
                 alert("Register successfully...!");
-                console.log(response);
-                $scope.message = "Register successfully...!";
                 $location.path('/login');
             },
             function errorCallback(response) {
-                alert("Register Unsuccessfully...!");
-                $scope.message =response.data.message.message;
+                alert("Email id already exit or incorrect format...!");
             }
         );
     }

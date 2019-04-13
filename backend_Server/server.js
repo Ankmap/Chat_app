@@ -4,7 +4,6 @@
  **/
 const express = require('express');
 const app = express();
-const http = require('http'); //data communication
 /**
  * @Purpose : body-parser module parses the JSON, buffer, 
  *            string and URL encoded data submitted using HTTP POST/Get request.
@@ -27,6 +26,11 @@ const mongoose = require('mongoose');
  **/
 const route = require('../backend_Server/router/router');
 app.use('/', route);
+/**
+ * @Purpose : Connection with frontend_Client
+ **/
+app.use(express.static('../frontend_Client'));
+
 /**
  * @Purpose : Connection with server
  **/
@@ -52,22 +56,20 @@ mongoose.connect(dbConfig.url, {
  **/
 const cors = require('cors');
 app.use(cors())
-/**
- * @Purpose : Connection with frontend_Client
- **/
-app.use(express.static('../frontend_Client'));
-
+const http = require('http'); //data communication
 /**
  *@Purpose : Imporing socket io to get connection between client and server 
 **/
-var socketIO = require('socket.io');
+//const server = require('http').createServer(app);
 const io = require('socket.io')(server);
-//console.log("Army");
+// var socketIO = require('socket.io');
+console.log("Army.11111");
 /**
- * @Purpose : checking for events. connecton will be listening for incoming sockets.
-**/
-io.on('connection', function (socket) {
-    console.log("Army");
+ * The on() Method
+This method will attach an event listener to the socket object, 
+so we can utilize any data sent from the server: */
+io.sockets.on('connection', function (socket) {
+    console.log("Army111111111111111111111");
     console.log("Connected socket!");
     socket.on('disconnect', function () {
         console.log("Socket Disconnected!")

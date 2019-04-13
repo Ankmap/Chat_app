@@ -3,7 +3,7 @@
 **/
 var nodemailer = require('nodemailer');
 
-exports.sendEMailFunction = (userEmail,url ) => {
+exports.sendEMailFunction = (userEmail,url) => {
     try {
         var transporter = nodemailer.createTransport({
             service: 'gmail',
