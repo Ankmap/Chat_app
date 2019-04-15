@@ -3,6 +3,7 @@
  */
 const express = require('express');
 const router = express.Router();
+const authroutes = require('./autherization');
 const controller = require('../controller/controller');
 
 try {
@@ -26,6 +27,10 @@ try {
      * @Purpose : GetAllUser
      **/
     router.get('/getAllUser', controller.getAllUser);
+    /**
+     * @Purpose : Auth
+     **/
+    router.use('/auth', authroutes);
 } catch (err) {
     console.log(err);
 }

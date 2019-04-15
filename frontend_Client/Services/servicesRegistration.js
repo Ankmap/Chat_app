@@ -1,4 +1,3 @@
-console.log('check service  Reg1');
 app.service('servicesRegistration', function ($http, $location) {
     console.log('check service  Reg1');
     this.registrationForm = function (data, $scope) {

@@ -12,6 +12,12 @@ app.service('servicesLogin', function ($http, $location) {
                 console.log("Login successfully......!");
                 alert("Login successfully......!");
                 console.log(response);
+                var userid = response.data.message[0]._id;
+                var name = response.data.message[0].name;
+                var token = response.data.token;
+                localStorage.setItem("userid", userid);
+                localStorage.setItem("name", name);
+                localStorage.setItem("token",token);
                 $location.path('dashboard');
                 $scope.loginMessage = "Login successfully......";
             },

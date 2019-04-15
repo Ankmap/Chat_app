@@ -50,28 +50,26 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 /*-----------------------------------------Socket Connection --------------------------------------------------*/
-/**
- * @Purpose : The frontend code for a web application served from XMLHttpRequest 
- *            to make a request for json.
- **/
+
 const cors = require('cors');
 app.use(cors())
+
 const http = require('http'); //data communication
-/**
- *@Purpose : Imporing socket io to get connection between client and server 
-**/
-//const server = require('http').createServer(app);
 const io = require('socket.io')(server);
-// var socketIO = require('socket.io');
-console.log("Army.11111");
-/**
- * The on() Method
-This method will attach an event listener to the socket object, 
-so we can utilize any data sent from the server: */
-io.sockets.on('connection', function (socket) {
-    console.log("Army111111111111111111111");
+
+var chatController = require('./controller/chatController');
+io.on('connection', function (socket) {
     console.log("Connected socket!");
-    socket.on('disconnect', function () {
-        console.log("Socket Disconnected!")
+    socket.on('createMessage', function (message) {
+        chatController.message(message, (err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                io.emit('newMessageSingle', message);
+            }
+        })
+        socket.on('disconnect', function () {
+            console.log("Socket Disconnected!")
+        });
     });
 });
