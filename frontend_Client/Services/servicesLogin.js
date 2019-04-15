@@ -12,6 +12,7 @@ app.service('servicesLogin', function ($http, $location) {
                 console.log("Login successfully......!");
                 alert("Login successfully......!");
                 console.log(response);
+                $location.path('dashboard');
                 $scope.loginMessage = "Login successfully......";
             },
             // this function will be called when the request returned error status

@@ -149,7 +149,7 @@ usermodel.prototype.resetPassword = (body, callback) => {
 /**
  * @Purpose : Get all data
 **/
-usermodel.prototype.data = (req, callback) => {
+usermodel.prototype.getAllUser = (req, callback) => {
     user.find({}, (err, data) => {
         if (err) {
             response = {

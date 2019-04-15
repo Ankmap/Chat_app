@@ -53,8 +53,8 @@ exports.resetPassword = (req, callback) => {
 /**
  * @Purpose : Get all data
 **/
-exports.data = (req, callback) => {
-    userModel.data(req, (err, data) => {
+exports.getAllUser = (req, callback) => {
+    userModel.getAllUser(req, (err, data) => {
         if (err) {
             return callback(err);
         } else {

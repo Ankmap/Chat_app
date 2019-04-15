@@ -140,8 +140,8 @@ module.exports.resetPassword = (req, res) => {
 /**
  * @Purpose : Get all data
 **/
-module.exports.data = (req, res) => {
-    userService.data(req, (err, data) => {
+module.exports.getAllUser = (req, res) => {
+    userService.getAllUser(req, (err, data) => {
         var response = {};
         if (err) {
             return callback(err);

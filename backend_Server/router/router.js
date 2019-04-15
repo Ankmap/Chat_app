@@ -25,7 +25,7 @@ try {
     /**
      * @Purpose : GetAllUser
      **/
-    router.get('/getAllUser', controller.data);
+    router.get('/getAllUser', controller.getAllUser);
 } catch (err) {
     console.log(err);
 }
