@@ -47,7 +47,7 @@ module.exports.register = (req, res) => {
 **/
 module.exports.login = (req, res) => {
     req.checkBody('email', 'Email is not valid').isEmail();
-    req.checkBody('password', 'password is not valid..!(Password length must be 5)').isLength({ min: 5 }).equals(req.body.confirmPassword);
+    req.checkBody('password', 'password is not valid..!(Password length must be 5)').isLength({ min: 5 });
     var errors = req.validationErrors();
     var response = {};
     if (errors) {
