@@ -4,6 +4,7 @@
 var userService = require('../services/userService');
 var access = require('../authentication/token');
 var sendmail = require('../middleware/senemail');
+var jwt =  require('jsonwebtoken')
 /**
  * @Purpose : For register a new account
 **/
@@ -45,23 +46,33 @@ module.exports.register = (req, res) => {
  * @Purpose : For login an account
 **/
 module.exports.login = (req, res) => {
+    req.checkBody('email', 'Email is not valid').isEmail();
+    req.checkBody('password', 'password is not valid..!(Password length must be 5)').isLength({ min: 5 }).equals(req.body.confirmPassword);
+    var errors = req.validationErrors();
     var response = {};
-    userService.login(req.body, (err, data) => {
-        if (err) {
-            response.success = false;
-            response.error = err;
-            res.status(500).send(response);
-        }
-        else {
-            response.success = true;
-            response.data = data;
-            res.status(200).send({
-                status: true,
-                message: 'Login sucessfully,,,!'
-            });
-        }
-    })
-}
+    if (errors) {
+        response.success = false;
+        response.error = errors;
+        response.message = 'error in validation';
+        return res.status(422).send(response);
+    } else {
+        userService.login(req.body, (err, data) => {
+            if (err) {
+                return res.status(500).send({
+                    message: err
+                });
+            } else {
+                var token = jwt.sign({ email: req.body.email, id: data[0]._id }, 'secret', { expiresIn:'2h' });
+                return res.status(200).send({
+                    success =true,
+                    message: 'Login successfully',
+                    "token": token
+                });
+            }
+        })
+    }
+
+};
 /**
  * @Purpose : For forgotPassword 
 **/
@@ -144,7 +155,9 @@ module.exports.getAllUser = (req, res) => {
     userService.getAllUser(req, (err, data) => {
         var response = {};
         if (err) {
-            return callback(err);
+            response.success = false;
+            response.error = err;
+            res.status(500).send(response);
         } else {
             response.success = true;
             response.result = data;

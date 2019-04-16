@@ -82,32 +82,24 @@ usermodel.prototype.register = (body, callback) => {
  * @Purpose : For login an account
 **/
 usermodel.prototype.login = (body, callback) => {
-    /**
-    * @Purpose : It find the email in the database.
-    **/
-    user.findOne({ "email": body.email }, (err, data) => {
-        //   console.log(data);
+    user.find({ "email": body.email }, (err, data) => {
         if (err) {
-            callback(err);
-        } else if (data != null) {
-            console.log('------------- Before comparing password -------------'); 
-            bcrypt.compare(body.password, data.password).then(function (res) {
-                if (res) {
+            return callback(err);
+        } else if (data.length > 0) {
+            bcrypt.compare(body.password, data[0].password, function (err, res) {
+                if (err) {
+                    return callback(err);
+                } else if (res) {
+                    console.log(data);
                     console.log("Login successfully...!");
-                    /**
-                     * @Purpose : If credentials are correct, return the data object and res
-                     **/
-                    callback(null, res);
-                }
-                else {
-                    console.log("Incorrect password");
-                    callback("Incorrect password");
+                    return callback(null, data);
+                } else {
+                    return callback("Incorrect password").status(500);
                 }
             });
-        }
-        else {
+        } else {
             console.log("Incorrect password Or user");
-            callback("Incorrect password Or user");
+            return callback("Invalid User ");
         }
     });
 }

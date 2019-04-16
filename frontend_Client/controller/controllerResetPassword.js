@@ -1,5 +1,5 @@
 app.controller('controlRestPassword', function ($scope, servicesResetPassword) {
-    // console.log('army loveeeeeeeeeeeee');
+    // console.log('army ');
     $scope.resetPassword = function () {
         var user = {
             'password': $scope.password,

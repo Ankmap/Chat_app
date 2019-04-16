@@ -10,7 +10,7 @@ try {
                 console.log("controller is working fine");
                 callback(null, data);
             }
-        })
+        });
     }
 }
 catch (err) {
@@ -18,7 +18,7 @@ catch (err) {
 
 }
 try {
-    module.exports.getUserMsg = (req, res) => {
+    module.exports. getUserMsg = (req, res) => {
         console.log("Entered control");
         chatServices.getUserMsg(req, (err, data) => {
             var responce = {};
@@ -31,7 +31,7 @@ try {
                 data.responce = data;
                 res.status(200).send(responce)
             }
-        })
+        });
     }
 }
 catch (err) {

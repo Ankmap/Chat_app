@@ -24,7 +24,7 @@ exports.login = (req, callback) => {
         } else {
             return callback(null, data);
         }
-    });
+    })
 }
 /**
  * @Purpose : For forgotPassword
