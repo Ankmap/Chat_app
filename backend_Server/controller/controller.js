@@ -47,13 +47,13 @@ module.exports.register = (req, res) => {
 **/
 module.exports.login = (req, res) => {
     req.checkBody('email', 'Email is not valid').isEmail();
-    req.checkBody('password', 'password is not valid..!(Password length must be 5)').isLength({ min: 5 });
+    req.checkBody('password', 'password is not valid').isLength({ min: 5 });
+
     var errors = req.validationErrors();
     var response = {};
     if (errors) {
         response.success = false;
         response.error = errors;
-        response.message = 'error in validation';
         return res.status(422).send(response);
     } else {
         userService.login(req.body, (err, data) => {
@@ -62,16 +62,14 @@ module.exports.login = (req, res) => {
                     message: err
                 });
             } else {
-                var token = jwt.sign({ email: req.body.email, id: data[0]._id }, 'secret', { expiresIn:'2h' });
+                var token = jwt.sign({ email: req.body.email, id: data[0]._id }, 'secret', { expiresIn: 86400000 });
                 return res.status(200).send({
-                    success :true,
-                    message: 'Login successfully',
+                    message: data,
                     "token": token
                 });
             }
         })
     }
-
 };
 /**
  * @Purpose : For forgotPassword 

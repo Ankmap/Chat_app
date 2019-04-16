@@ -18,6 +18,7 @@ exports.register = (req, callback) => {
  * @Purpose : For login an account
 **/
 exports.login = (req, callback) => {
+    //console.log("login service",req);
     userModel.login(req, (err, data) => {
         if (err) {
             return callback(err);

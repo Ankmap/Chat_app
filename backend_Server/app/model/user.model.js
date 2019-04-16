@@ -91,14 +91,13 @@ usermodel.prototype.login = (body, callback) => {
                     return callback(err);
                 } else if (res) {
                     console.log(data);
-                    console.log("Login successfully...!");
+
                     return callback(null, data);
                 } else {
                     return callback("Incorrect password").status(500);
                 }
             });
         } else {
-            console.log("Incorrect password Or user");
             return callback("Invalid User ");
         }
     });
