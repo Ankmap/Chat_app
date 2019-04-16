@@ -62,9 +62,10 @@ module.exports.login = (req, res) => {
                     message: err
                 });
             } else {
-                var token = jwt.sign({ email: req.body.email, id: data[0]._id }, 'secret', { expiresIn: 86400000 });
+                var token = jwt.sign({ email: req.body.email, id: data[0]._id }, 'secret', { expiresIn:'2h' });
                 return res.status(200).send({
-                    message: data,
+                    status:true,
+                    message: 'Login Successfully...!',
                     "token": token
                 });
             }
