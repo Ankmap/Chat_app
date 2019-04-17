@@ -20,12 +20,12 @@ try {
         chatServices.getUserMsg(req, (err, data) => {
             var response = {};
             if (err) {
-                data.response = false;
-                data.response = err;
+                response.success = false;
+                response.error = err;
                 res.status(500).send(response)
             } else {
-                data.response = true;
-                data.response = data;
+                response.success = true;
+                response.result = data;
                 res.status(200).send(response)
             }
         });

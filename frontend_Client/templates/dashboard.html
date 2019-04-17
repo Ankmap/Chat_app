@@ -50,8 +50,13 @@
         <hr>
         <p class="username">{{recieverUserName}}</p>
         <div  ng-repeat="chat in allUserArr">
-            <div class="design" ng-show="currUser == chat.senderUserId">
-                <p class="msg"> {{chat.message}}</p>
+            <div class="chatLogs" ng-repeat="chat in allUserArr">
+                <div class="design" ng-show="currUser != chat.senderUserId">
+                    <p class="msg"> {{chat.message}}</p>
+                </div>
+                <div class="design" ng-show="currUser == chat.senderUserId">
+                    <p class="msg"> {{chat.message}}</p>
+                </div>
             </div>
         </div>
         <div class="bottom">

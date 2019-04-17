@@ -65,7 +65,7 @@ io.on('connection', function (socket) {
             if (err) {
                 console.log("Error in sending message:",err);
             } else {
-                io.emit('newMessageSingle', message);
+                io.emit('newMessageSingle', data);
             }
         })
         socket.on('disconnect', function () {

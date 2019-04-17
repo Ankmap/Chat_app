@@ -5,6 +5,7 @@ exports.addMessage = (req, callback) => {
         if (err) {
             return callback(err)
         } else {
+            console.log(data);
             return callback(null, data)
         }
     });

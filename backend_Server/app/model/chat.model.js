@@ -4,6 +4,8 @@ var mongoSchema = mongoose.Schema;
 var chatSchema = new mongoSchema({
     senderUserId: { type:String},
     senderName: {type:String},
+    reciverUserId: {type:String},
+    reciverName: {type:String},
     message:{ type:String},
     date :{type:Date, default:Date.now}
 });
@@ -17,6 +19,8 @@ try {
         const newMsg = new chat({
             senderUserId: chatData.senderUserId,
             senderName: chatData.senderName,
+            reciverUserId:chatData.reciverUserId,
+            reciverName:chatData.reciverName,
             message: chatData.message,
             date: chatData.date
         });
@@ -25,6 +29,7 @@ try {
             if (err) {
                 return callback(err);
             } else {
+                console.log(result);
                 return callback(null,result);
             }
         });
@@ -36,10 +41,17 @@ catch(err){
 
 try {
     chatModel.prototype.getUserMsg = (req ,callback) => {
+        var response = { }
         chat.find({}, (err, data) => {
             if (err) {
-                return callback(err)
+                response = {
+                    "error": true,
+                    "message": "Error retriving data",
+                    "err": err
+                };
+                return callback(response)
             } else {
+                console.log(data)
                 return callback(null, data);
             }
         });
