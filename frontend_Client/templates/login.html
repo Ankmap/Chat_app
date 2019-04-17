@@ -1,18 +1,23 @@
 <link rel="stylesheet" href="../css/login.css">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="login-page">
     <h1>Account Login</h1>
     <div class="logo">
         <img src="../assets//login_logo.jpg">
     </div>
     <div class="form" >
-        <input type="email" name="email" placeholder=" Email" ng-model="email"/>
-        <input type="password" name="password" placeholder=" Password" ng-model="password"/>
+        <div class="email">
+                <input type="email" name="email" placeholder=" Email" ng-model="email"/>
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+        </div>
+       <div class="password">
+            <input type="password" name="password" placeholder=" Password" ng-model="password"/>
+            <i class="fa fa-lock" aria-hidden="true"></i>
+       </div>
         <button type="submit" ng-click="login()" class="login-button">Sign in</button>
         <p class="message">
             <a ui-sref="forgotPassword">Forgot password ?</a>
         </p>
-        <!-- Not registered ? <a href="./registrationForm.html">Create an account</a> -->
         Not registered ? <a ui-sref="registrationForm">Sign Up</a>
     </div>
 </div>

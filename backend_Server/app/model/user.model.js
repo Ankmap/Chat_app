@@ -71,7 +71,7 @@ usermodel.prototype.register = (body, callback) => {
                 if (err) {
                     return callback(err);
                 } else {
-                    console.log("Data saved successfully..!", result);
+                    console.log("Data saved successfully..!");
                     return callback(null, result);
                 }
             })

@@ -64,8 +64,7 @@ module.exports.login = (req, res) => {
             } else {
                 var token = jwt.sign({ email: req.body.email, id: data[0]._id }, 'secret', { expiresIn:'2h' });
                 return res.status(200).send({
-                    status:true,
-                    message: 'Login Successfully...!',
+                     message: data,
                     "token": token
                 });
             }

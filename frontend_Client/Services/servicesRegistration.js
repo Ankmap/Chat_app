@@ -11,11 +11,13 @@ app.service('servicesRegistration', function ($http, $location) {
                 alert("Register successfully...!");
                 console.log(response);
                 $scope.message = "register successfully"
+                console.log($scope.message);
                 $location.path('/login');
             },
             function errorCallback(response) {
-                alert("Email id already exit or incorrect format...!");
+                alert("Email id already exit...!");
                 $scope.message = response.data.message.message;
+                console.log($scope.message);
                 console.log(response);
             }
         );

@@ -1,17 +1,46 @@
 <link rel="stylesheet" href="../css//dashboard.css">
-
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid black;
+    }
+</style>
 <header>
     <h1>ChatApp Dashboard</h1>
-    <h3>Welcome {{currUserName}}</h3>
+    <marquee behavior=scroll direction="right" scrollamount="3">
+        <h3>Welcome {{currUserName}}</h3>
+    </marquee>
 </header>
 
 <body ng-controller="chatController">
     <div class="left">
         <h2>Contact List</h2>
         <hr>
+        <!-- <marquee width="40%" direction="up" height="60%"> -->
         <p ng-repeat="x in allUser" ng-click="person(x)" ng-show="currUserName!=x.name">
             {{x.name}}
         </p>
+        <!-- </marquee> -->
+        <!-- <table style="width:100%">
+            <tr>
+                <th>Name</th>
+                <th>Id</th>
+            </tr>
+            <tr>
+                <td>
+                    <p ng-repeat="x in allUser" ng-click="person(x)" ng-show="currUserName!=x.name">
+                        {{x.name}}
+                    </p>
+                </td>
+                <td>
+                    <p ng-repeat="x in allUser" ng-click="person(x)" ng-show="currUser!=x._id">
+                        {{x._id}}
+                    </p>
+                </td>
+            </tr>
+        </table> -->
+
         <button class="btn">
             <a href="#home" class="active" ui-sref="login">Sign out</a>
         </button>
@@ -19,9 +48,15 @@
     <div class="right">
         <h2>Chat Details</h2>
         <hr>
+        <p class="username">{{recieverUserName}}</p>
+        <div  ng-repeat="chat in allUserArr">
+            <div class="design" ng-show="currUser == chat.senderUserId">
+                <p class="msg"> {{chat.message}}</p>
+            </div>
+        </div>
         <div class="bottom">
-            <textarea name="" id="txt" cols="20" rows="5"></textarea>
-            <button>send</button>
+            <textarea  id="txt" cols="20" rows="5" ng-model="message"></textarea>
+            <button type="button" ng-click=sendmessage(); class="sendclick">send</button>
         </div>
     </div>
 </body>

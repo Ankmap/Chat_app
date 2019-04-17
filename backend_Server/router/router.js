@@ -24,17 +24,11 @@ try {
      **/
     router.post('/resetPassword', controller.resetPassword);
     /**
-     * @Purpose : GetAllUser
-     **/
-    router.get('/getAllUser', controller.getAllUser);
-    /**
      * @Purpose : Auth
      **/
     router.use('/auth', authroutes);
 } catch (err) {
     console.log(err);
 }
-/**
- * @Purpose : Registration
-**/
+
 module.exports = router;

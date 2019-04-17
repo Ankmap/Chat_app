@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
 try {
     exports.checkToken =(req,res,next)=>{
-        var token1 = req.headers['token'];
-        if(token1){
-            jwt.verify(token1, 'secretkey', (err,decoded)=>{
+        var token = req.headers['token'];
+        if(token){
+            jwt.verify(token, 'secretkey', (err,decoded)=>{
                 if(err){
                     return res.send({
                         sucess:false,
@@ -25,6 +25,6 @@ try {
     }
 }
 catch (err) {
-    console.log(err)
+    console.log("Error in decoded file:-->",err)
 }
 

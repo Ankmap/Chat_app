@@ -3,11 +3,9 @@ const chatModel = require('../app/model/chat.model')
 exports.addMessage = (req, callback) => {
     chatModel.addMessage(req, (err, data) => {
         if (err) {
-            console.log("err on service file", err);
-            callback(err)
+            return callback(err)
         } else {
-            console.log("data on service file", data);
-            callback(null, data)
+            return callback(null, data)
         }
     });
 }
@@ -15,11 +13,9 @@ exports.addMessage = (req, callback) => {
 exports.getUserMsg = (req, callback) => {
     chatModel.getUserMsg(req, (err, data) => {
         if (err) {
-            console.log("chat services is not working");
-            callback(err);
+            return callback(err);
         } else {
-            console.log("chat service is working fine")
-            callback(null, data);
+            return callback(null, data);
         }
     });
 }

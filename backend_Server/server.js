@@ -35,7 +35,7 @@ app.use(express.static('../frontend_Client'));
  * @Purpose : Connection with server
  **/
 var server = app.listen(3000, () => {
-    console.log("Server is listening to port 3000");
+    console.log("\n Server is listening to port 3000");
 })
 /**
  * @Purpose : Connection to the mongo database
@@ -44,7 +44,7 @@ const dbConfig = require('./config/database.config');
 mongoose.connect(dbConfig.url, {
     useNewUrlParser: true
 }).then(() => {
-    console.log("Successfully connected to database...!");
+    console.log("\n Successfully connected to database...!");
 }).catch(err => {
     console.log("Could not connect to the database....Start mongod\n Sudo service mongod start..!");
     process.exit();
@@ -59,17 +59,17 @@ const io = require('socket.io')(server);
 
 var chatController = require('./controller/chatController');
 io.on('connection', function (socket) {
-    console.log("Connected socket!");
+    console.log("\n --------------------- Socket is connected now ---------------------");
     socket.on('createMessage', function (message) {
         chatController.message(message, (err, data) => {
             if (err) {
-                console.log(err);
+                console.log("Error in sending message:",err);
             } else {
                 io.emit('newMessageSingle', message);
             }
         })
         socket.on('disconnect', function () {
-            console.log("Socket Disconnected!")
+            console.log("\n ================ Socket is disconnected now ================")
         });
     });
 });

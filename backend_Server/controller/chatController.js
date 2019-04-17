@@ -1,40 +1,36 @@
 const chatServices = require("../services/chatServices");
+
 try {
     module.exports.message = (req, callback) => {
-        console.log("request", req);
         chatServices.addMessage(req, (err, data) => {
             if (err) {
-                console.log("error in controller");
-                callback(err);
+                return callback(err);
             } else {
-                console.log("controller is working fine");
-                callback(null, data);
+                return callback(null, data);
             }
         });
     }
 }
 catch (err) {
-    console.log("Error in sending message!");
-
+    console.log("Error in sending message!",err);
 }
+
 try {
     module.exports. getUserMsg = (req, res) => {
-        console.log("Entered control");
         chatServices.getUserMsg(req, (err, data) => {
-            var responce = {};
+            var response = {};
             if (err) {
-                data.responce = false;
-                data.responce = err;
-                res.status(500).send(responce)
+                data.response = false;
+                data.response = err;
+                res.status(500).send(response)
             } else {
-                data.responce = true;
-                data.responce = data;
-                res.status(200).send(responce)
+                data.response = true;
+                data.response = data;
+                res.status(200).send(response)
             }
         });
     }
 }
 catch (err) {
-    console.log("Error found in server chat controll!");
-
+    console.log("Error found in server chat controll!",err);
 }

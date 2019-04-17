@@ -8,6 +8,12 @@ app.controller('controlregistrationForm', function ($scope, servicesRegistration
             'password': $scope.password,
             'confirmPassword': $scope.confirmPassword
         }
+        var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        if (!reg.test($scope.email)){
+            alert("Please Enter valid email format");
+            $scope.password.focus();
+            return false;
+        }
         if($scope.password.length < 6){
             alert("Error: Password must contain at least six characters!");
             $scope.password.focus();
