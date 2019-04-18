@@ -1,49 +1,55 @@
 <link rel="stylesheet" href="../css//dashboard.css">
 
-<header>
-    <h1>ChatApp Dashboard</h1>
-    <marquee behavior=scroll direction="right" scrollamount="3">
-        <h3>Welcome {{currentUserName}} let's enjoy ur chat...!</h3>
-    </marquee>
-</header>
+<body class="bg">
+    <header>
+        <h1>ChatApp Dashboard</h1>
+        <span class="user">
+            <h3>Welcome {{currentUserName}} let's enjoy ur chat...!</h3>
+        </span>
+        <button class="top">
+            <a href="#home" class="active" ui-sref="login">Sign out</a>
+        </button>
+    </header>
 
-<body ng-controller="chatController">
-    <div class="left">
-        <h2>Contact List</h2>
-        <hr>
-        <div class="list">
-            <h3> {{currentUserName}} let's select the reciver...!</h3>
-            <p ng-repeat="x in allUser" ng-click="person(x)" ng-show="currentUserName!=x.name">
-                {{x.name}}
-            </p>
-        </div>
-    </div>
-
-    <div class="right">
-        <div class="img">
-            <h2>Chat Details</h2>
-            <button class="top">
-                <a href="#home" class="active" ui-sref="login">Sign out</a>
-            </button>
+    <section>
+        <div class="left">
+            <h2>Contact List</h2>
             <hr>
-            <p class="userlist">{{receiverUserName}}</p>
-            <div ng-repeat="chat in allUserArr">
-                <div class="chatRecSend" ng-repeat="chat in allUserArr">
-                    <!-- Reciver -->
-                    <div class="design1" ng-show="currUser != chat.senderUserId">
-                        <p class="msg"> {{chat.message}}</p>
-                    </div>
-                    <!-- Sender -->
-                    <div class="design2" ng-show="currUser == chat.senderUserId">
-                        <p class="msg"> {{chat.message}}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="bottom">
-                <textarea id="txt" cols="20" rows="5" ng-model="message" placeholder="Type text here...."></textarea>
-                <button type="button" ng-click=sendmessage();>send</button>
+            <div class="name">
+                <p ng-repeat="x in allUser" ng-click="person(x)" ng-show="currentUserName!=x.name">
+                    {{x.name}}
+                </p>
             </div>
         </div>
-    </div>
-
+        <div class="right">
+            <h2>Chat Details</h2>
+            <hr>
+            <div class="name1">
+                <p class="username">
+                        {{currentUserName}} chat with {{receiverUserName}}
+                </p>
+            </div>
+            <article>
+                <section>
+                    <div class="chatLogs" ng-repeat="chat in allUserArr">
+                        <div class="chat user" ng-show="currentUser != chat.senderUserId">
+                            <p class="chatMsg"> {{chat.message}}</p>
+                        </div>
+                        <div class="chat self" ng-show="currentUser == chat.senderUserId">
+                            <p class="chatMsg"> {{chat.message}}</p>
+                        </div>
+                    </div>
+                </section>
+                <div>
+                    <span>
+                        <div class="bottom">
+                            <textarea id="txt" cols="20" rows="5" ng-model="message"
+                                placeholder="Type text here...."></textarea>
+                            <button class="btn" type="button" ng-click=sendmessage();>send</button>
+                        </div>
+                    </span>
+                </div>
+            </article>
+        </div>
+    </section>
 </body>

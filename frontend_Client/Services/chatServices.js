@@ -4,7 +4,7 @@ app.service('chatServices', function ($http) {
             console.log('Token------->', usertoken);
             $http({
                 method: 'GET',
-                url: 'http://localhost:3000/auth/getAllUser',
+                url: 'http://localhost:3000/getAllUser',
                 headers: {
                     'token': usertoken,
                 }
@@ -29,7 +29,7 @@ app.service('chatServices', function ($http) {
             var usertoken = localStorage.getItem('token');
             $http({
                 method: 'GET',
-                url: 'http://localhost:3000/auth/getUserMsg',
+                url: 'http://localhost:3000/getUserMsg',
                 headers: {
                     'token': usertoken,
                 }

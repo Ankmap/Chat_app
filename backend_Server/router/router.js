@@ -3,7 +3,7 @@
  */
 const express = require('express');
 const router = express.Router();
-const authroutes = require('./autherization');
+var chatController = require("../controller/chatController");
 const controller = require('../controller/controller');
 
 try {
@@ -22,11 +22,13 @@ try {
     /**
      * @Purpose : ResetPassword
      **/
-    router.post('/resetPassword', controller.resetPassword);
+    router.post('/resetPassword',controller.resetPassword);
     /**
-     * @Purpose : Auth
+     * @Purpose : get data
      **/
-    router.use('/auth', authroutes);
+    router.get('/getAllUser', controller.getAllUser);
+
+    router.get('/getUserMsg', chatController.getUserMsg);
 } catch (err) {
     console.log(err);
 }
