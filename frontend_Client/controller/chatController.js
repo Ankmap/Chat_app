@@ -1,47 +1,46 @@
 app.controller('chatController', function ($scope, SocketService, $state, chatServices) {
     $scope.message = '';
     $scope.allUserArr = [];
-    $scope.currUserName = localStorage.getItem('name');
-    // console.log($scope.currUserName);
-    $scope.currUser = localStorage.getItem('userid');
-    $scope.recieverUserName = localStorage.getItem('rusername');
+    $scope.currentUserName = localStorage.getItem('name');
+    console.log("$scope.currentUserName---->",$scope.currentUserName);
+    $scope.currentUser = localStorage.getItem('userid');
+    $scope.receiverUserName = localStorage.getItem('rusername');
     var token = localStorage.getItem("token");
-    //console.log(token);
+    console.log(token);
     /**
-     * @Purpose : If token is null it goes to login
-     **/ 
+     * @Purpose : if the token is null then redirects to login page
+     **/
     if (token === null) {
         $state.go('login');
     }
+
     try {
-        SocketService.on('newMessageSingle', (message) => {//listening to the evnts
-            if (localStorage.getItem('userid') == message.senderUserId || (localStorage.getItem('userid') == message.recieverUserId && localStorage.getItem('ruserId') == message.senderUserId)) {
+        SocketService.on('newMessageSingle', (message) => {
+            if (localStorage.getItem('userid') == message.senderUserId || (localStorage.getItem('userid') == message.receiverUserId && localStorage.getItem('ruserId') == message.senderUserId)) {
                 if ($scope.allUserArr === undefined) {
-                    $scope.allUserArr = message;//assighning message to variable
+                    $scope.allUserArr = message;
                 } else {
+                    console.log("Message is Here:-->",message)
                     $scope.allUserArr.push(message);
                 }
             }
-        })
+        });
     }
     catch (err) {
-        console.log("error in finding message")
+        console.log("Err: In newMessageSingle")
     }
-
-    /**
-     * @Purpose : Get all users
-     **/
     $scope.getAllUsers = function () {
         chatServices.getAllUsers($scope, token);
     }
     $scope.getAllUsers();
+    /**
+     * @Purpose : Select a person from list
+     **/
     $scope.person = function (userData) {
         $scope.allUserArr = '';
-        localStorage.setItem('name', userData.name);
-        localStorage.setItem('userId', userData._id);
-        localStorage.setItem('rusername', userData.name);//getting data from localstorage
+        localStorage.setItem('rusername', userData.name);
         localStorage.setItem('ruserId', userData._id);
-        $scope.recieverUserName = localStorage.getItem('rusername');
+        $scope.receiverUserName = localStorage.getItem('rusername');
         $scope.getUserMsg();
     }
     /**
@@ -52,34 +51,30 @@ app.controller('chatController', function ($scope, SocketService, $state, chatSe
     }
     $scope.getUserMsg();
 
-    /**
-     * @Purpose: Send message function
-     **/
     try {
+        console.log("sendmessage")
         $scope.sendmessage = function () {
-            console.log("sendmessage function is working now....!");
             var msg = {
                 'senderUserId': localStorage.getItem('userid'),
                 'senderName': localStorage.getItem('name'),
-                'recieverUserId': localStorage.getItem('ruserId'),
-                'recieverName': localStorage.getItem('rusername'),
-                'message': $scope.message,
-                'date': $scope.date
+                'receiverUserId': localStorage.getItem('ruserId'),
+                'receiverName': localStorage.getItem('rusername'),
+                'message': $scope.message
             };
-            /**
-             * @Purpose : Emittin the message to the browser
-             **/
             $scope.message = '';
+            /**
+             * @Purpose : To emit the message to the browser
+             **/
             SocketService.emit('createMessage', msg);
         }
     }
     catch (err) {
-        console.log("error in sending message to the reciever",err)
+        console.log("Err: Sending message to the receiver")
     }
 
     /**
-     * @Purpose : Return back to login page
-     **/
+     * @Purpose : Back to the login page
+     **/ 
     try {
         $scope.logout = function () {
             localStorage.clear();
@@ -87,6 +82,6 @@ app.controller('chatController', function ($scope, SocketService, $state, chatSe
         }
     }
     catch (err) {
-        console.log("error in logout",err)
+        console.log("Err:logout")
     }
 });

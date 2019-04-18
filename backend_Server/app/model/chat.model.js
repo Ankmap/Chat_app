@@ -2,63 +2,60 @@ var mongoose = require('mongoose');
 var mongoSchema = mongoose.Schema;
 
 var chatSchema = new mongoSchema({
-    senderUserId: { type:String},
-    senderName: {type:String},
-    reciverUserId: {type:String},
-    reciverName: {type:String},
-    message:{ type:String},
-    date :{type:Date, default:Date.now}
-});
+    senderUserId: { type: String },
+    senderName: { type: String },
+    receiverUserId: { type: String },
+    receiverName: { type: String },
+    message: { type: String }
+
+}, {
+        timestamps: true
+    });
 function chatModel() {
 }
 
 var chat = mongoose.model('chatInfo', chatSchema);
-
 try {
     chatModel.prototype.addMessage = (chatData, callback) => {
-        const newMsg = new chat({
+        console.log('In backend chatmodel', chatData.senderUserId)
+        const newMessage = new chat({
             senderUserId: chatData.senderUserId,
             senderName: chatData.senderName,
-            reciverUserId:chatData.reciverUserId,
-            reciverName:chatData.reciverName,
-            message: chatData.message,
-            date: chatData.date
+            receiverUserId: chatData.receiverUserId,
+            receiverName: chatData.receiverName,
+            message: chatData.message
         });
+        console.log("newMessage data ==>", newMessage);
 
-        newMsg.save((err, result) => {
+        newMessage.save((err, result) => {
             if (err) {
                 return callback(err);
             } else {
-                console.log(result);
-                return callback(null,result);
+                return callback(null, result);
             }
         });
     }
-}
-catch(err){
-    console.log("Error in schema:",err)
-}
 
+}
+catch (err) {
+    console.log("Err: While data saved")
+}
+/**
+ * @Purpose :  getUserMsg to fetch chat
+ **/ 
 try {
-    chatModel.prototype.getUserMsg = (req ,callback) => {
-        var response = { }
+    chatModel.prototype.getUserMsg = (req, callback) => {
         chat.find({}, (err, data) => {
             if (err) {
-                response = {
-                    "error": true,
-                    "message": "Error retriving data",
-                    "err": err
-                };
-                return callback(response)
+                callback(err)
             } else {
-                console.log(data)
-                return callback(null, data);
+                callback(null, data);
             }
         });
     }
 }
-catch(err){
-    console.log("Error in getUserMsg:",err)
+catch (err) {
+    console.log("Err: getUserMsg not found...!")
 }
 
 module.exports = new chatModel();

@@ -4,8 +4,10 @@ try {
     module.exports.message = (req, callback) => {
         chatServices.addMessage(req, (err, data) => {
             if (err) {
+                console.log('Err : Backend Chat controller',err);
                 return callback(err);
             } else {
+                console.log('Result : Backend Chat controller');
                 return callback(null, data);
             }
         });

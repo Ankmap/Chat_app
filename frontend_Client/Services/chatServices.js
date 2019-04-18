@@ -1,9 +1,7 @@
 app.service('chatServices', function ($http) {
-/**
- * @Purpose : Get all users
- **/
     try {
         this.getAllUsers = function ($scope, usertoken) {
+            console.log('Token------->', usertoken);
             $http({
                 method: 'GET',
                 url: 'http://localhost:3000/auth/getAllUser',
@@ -12,59 +10,50 @@ app.service('chatServices', function ($http) {
                 }
             }).then(
                 function successCallback(response) {
-                    //console.log(response);
-                    // console.log('check chat service getAllUser');
-                    // console.log(response.data.result);
-                    console.log('successCallback', response);
+                    console.log("successCallback========>", response)
                     $scope.allUser = response.data.result;
-                    console.log(response.data.result);
+                    console.log("In successCallback------>", response.data.result);
                 },
                 function errorCallback(response) {
-                    console.log(response);
-                    console.log("Login Unsuccessfull ");
+                    console.log("errorCallback========>", response)
+                    console.log("Error: FrontEnd chatServiice getAllUser..");
                 });
         }
     }
     catch (err) {
-        console.log("User not found..!",err)
+        console.log("ERROR: here in getting users")
     }
-
     try {
         this.getUserMsg = function ($scope) {
             var arr = [];
             var usertoken = localStorage.getItem('token');
             $http({
-                method: 'GET',//assigning value to http proprties 
-                url: 'http://localhost:3000/auth/getUserMsg',//assigning value to http proprties 
+                method: 'GET',
+                url: 'http://localhost:3000/auth/getUserMsg',
                 headers: {
                     'token': usertoken,
                 }
             }).then(
                 function successCallback(response) {
-                    console.log(response.data.message);
-
-                    for (let i = 0; i < (response.data.message); i++) {  //(response.data.message).length *change was done
+                    console.log("successCallback======>", response.data.message);
+                    for (let i = 0; i < (response.data.message); i++) {
                         a = response.data.message[i];
-
-                        if (((localStorage.getItem('userid') == a.senderUserId) && (localStorage.getItem('ruserId') == a.recieverUserId)) || ((localStorage.getItem('userid') == a.recieverUserId && localStorage.getItem('ruserId') == a.senderUserId))) {
-                            console.log("local user is ", localStorage.getItem('userid'), "a user is ", a.senderUserId, " local rcvrid is ", localStorage.getItem('ruserId'), "  reciver is ", a.recieverUserId);
-                            arr.push(a);//pushing all message to array
+                        if (((localStorage.getItem('userid') == a.senderUserId) && (localStorage.getItem('ruserId') == a.receiverUserId)) || ((localStorage.getItem('userid') == a.receiverUserId && localStorage.getItem('ruserId') == a.senderUserId))) {
+                            console.log("local user is ", localStorage.getItem('userid'), "a user is ", a.senderUserId, " local receiver id is ", localStorage.getItem('ruserId'), "  receiver is ", a.receiverUserId);
+                            arr.push(a);
                         }
-
                     }
                     $scope.allUserArr = arr;
-                    console.log("Users msg successfull ", arr);
-
+                    console.log(" Message send successfully....1", arr);
                 },
                 function errorCallback(response) {
-                    console.log("Unsuccessfull ");
-                    console.log(response);
-
-                }
-            );
+                    console.log("errorCallback========>", response)
+                    console.log("Error: FrontEnd chatServiice getUserMsg..");
+                });
         }
     }
     catch (err) {
-        console.log("founr error in getting message",err)
+        console.log("ERROR:chatServiice getUserMsg..")
     }
-});
+
+})
