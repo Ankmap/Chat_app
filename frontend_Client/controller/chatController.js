@@ -27,7 +27,7 @@ app.controller('chatController', function ($scope, SocketService, $state, chatSe
         })
     }
     catch (err) {
-        console.log("ERROR: in finding the message")
+        console.log("ERROR: newMessageSingle",err)
     }
 
     $scope.getAllUsers = function () {
