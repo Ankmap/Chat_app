@@ -8,6 +8,9 @@ app.controller('controlregistrationForm', function ($scope, servicesRegistration
             'password': $scope.password,
             'confirmPassword': $scope.confirmPassword
         }
+        /**
+         * @Purpose : validation for email,password
+         **/
         var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
         if (!reg.test($scope.email)){
             alert("Please Enter valid email format");

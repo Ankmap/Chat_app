@@ -39,12 +39,11 @@ app.service('chatServices', function ($http) {
                     for (let i = 0; i < (response.data.message); i++) {
                         a = response.data.message[i];
                         if (((localStorage.getItem('userid') == a.senderUserId) && (localStorage.getItem('ruserId') == a.receiverUserId)) || ((localStorage.getItem('userid') == a.receiverUserId && localStorage.getItem('ruserId') == a.senderUserId))) {
-                            console.log("local user is ", localStorage.getItem('userid'), "a user is ", a.senderUserId, " local receiver id is ", localStorage.getItem('ruserId'), "  receiver is ", a.receiverUserId);
                             arr.push(a);
                         }
                     }
                     $scope.allUserArr = arr;
-                    console.log(" Message send successfully....1", arr);
+                    console.log(" Message send successfully....!", arr);
                 },
                 function errorCallback(response) {
                     console.log("errorCallback========>", response)

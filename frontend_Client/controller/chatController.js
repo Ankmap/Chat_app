@@ -5,15 +5,12 @@ app.controller('chatController', function ($scope, SocketService, $state, chatSe
     console.log("$scope.currentUserName---->",$scope.currentUserName);
     $scope.currentUser = localStorage.getItem('userid');
     $scope.receiverUserName = localStorage.getItem('rusername');
+    console.log("$scope.receiverUserName---->",$scope.receiverUserName);
     var token = localStorage.getItem("token");
     console.log(token);
     /**
      * @Purpose : if the token is null then redirects to login page
      **/
-    if (token === null) {
-        $state.go('login');
-    }
-
     try {
         SocketService.on('newMessageSingle', (message) => {
             if (localStorage.getItem('userid') == message.senderUserId || (localStorage.getItem('userid') == message.receiverUserId && localStorage.getItem('ruserId') == message.senderUserId)) {
@@ -59,7 +56,8 @@ app.controller('chatController', function ($scope, SocketService, $state, chatSe
                 'senderName': localStorage.getItem('name'),
                 'receiverUserId': localStorage.getItem('ruserId'),
                 'receiverName': localStorage.getItem('rusername'),
-                'message': $scope.message
+                'message': $scope.message,
+                'date': new Date ()
             };
             $scope.message = '';
             /**

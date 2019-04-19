@@ -1,34 +1,35 @@
 <html>
 
 <head>
-<title>Index</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
+    <title>Index</title>
+    <!-- Required CDN angular.min.js, angular-ui-router.min.js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.14/angular-ui-router.min.js"></script>
-    <script src="./app.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+    <!-- Required app.js-->
+    <script src="./app.js"></script>
+    <!-- All Required Controller -->
     <script src="./controller/chatController.js"></script>
     <script src="./controller/controlLogin.js"></script>
     <script src="./controller/controllerForgotPassword.js"></script>
     <script src="./controller/controllerRegister.js"></script>
-    <script src="./controller/controllerResetPassword.js"></script> 
-
+    <script src="./controller/controllerResetPassword.js"></script>
+    <!-- All Required Services -->
     <script src="./Services/chatServices.js"></script>
     <script src="./Services/servicesResetPassword.js"></script>
     <script src="./Services/servicesRegistration.js"></script>
     <script src="./Services/servicesLogin.js"></script>
     <script src="./Services/servicesForgotPassword.js"></script>
-
+    <!-- All Required css -->
     <script src="./css/login.css"></script>
     <script src="./css/forgotPassword.css"></script>
     <script src="./css/registrationForm.css"></script>
     <script src="./css/resetPassword.css"></script>
-
+    <!-- For socket connectionn required cdn -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-socket-io/0.7.0/socket.min.js"></script>
-    
-
 </head>
+<!-- The ng-app directive => ng-app is the root element of the AngularJS application. -->
 
 <body ng-app="chatapp">
     <ui-view>

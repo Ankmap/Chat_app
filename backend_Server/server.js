@@ -1,4 +1,3 @@
-
 /**
  * @Purpose : express is node.js web application framework
  **/
@@ -53,10 +52,12 @@ mongoose.connect(dbConfig.url, {
 
 const cors = require('cors');
 app.use(cors())
-
-const http = require('http'); //data communication
+//data communication
+const http = require('http'); 
 const io = require('socket.io')(server);
-
+/**
+ * @purpose : Required file
+ **/ 
 var chatController = require('./controller/chatController');
 io.on('connection', function (socket) {
     console.log("\n --------------------- Socket is connected now ---------------------");
@@ -65,6 +66,7 @@ io.on('connection', function (socket) {
             if (err) {
                 console.log("Error in sending message:",err);
             } else {
+                // chatapp.chatinfos(data.senderUserId,data.senderName,data.receiverUserId,data.receiverName,data.message,data.date);
                 io.emit('newMessageSingle', data);
             }
         })

@@ -13,7 +13,7 @@ app.service('servicesResetPassword', function ($http, $location) {
             },
             function errorCallback(response) {
                 alert("reset password Unsuccessfully..! ");
-                $scope.message =response.data.message.message;
+                $scope.message =response.data.message;
             }
         );
     }

@@ -74,40 +74,29 @@ module.exports.login = (req, res) => {
 /**
  * @Purpose : For forgotPassword 
 **/
-module.exports.forgotPassword = (req, res) => {
-    userService.forgotPassword(req.body, (err, data) => {
-        console.log(req.body.email)
-        var response = {};
+exports.forgotPassword = (req, res) => {
+    var responseResult = {};
+    userService.forgotPassword(req.body, (err, result) => {
         if (err) {
-            return res.status(500).send({
-                message: err
-            });
+            responseResult.success = false;
+            responseResult.error = err;
+            res.status(500).send(responseResult)
         }
         else {
-            response.success = true;
-            response.data = data;
-            console.log("Data", data[0]._id);
-            /**
-             * @Purpose : payload for token 
-             *  Token : payload, secretkey, expiresIn
-            **/
+            responseResult.success = true;
+            responseResult.result = result;
+
             const payload = {
-                user_id: data[0]._id
+                user_id: responseResult.result._id
             }
-            /**
-             * @Purpose : Store  generateToken in token variable
-            **/
+            console.log(payload);
             const token = access.generateToken(payload);
-            console.log(token);
+            console.log("controller token", token);
             const url = `http://localhost:3000/#/resetPassword/${token.token}`;
-            /**
-             * @Purpose : Send Email
-            **/
             sendmail.sendEMailFunction(req.body.email,url);
-            //console.log( url);
             res.status(200).send({
                 status: true,
-                message: "Reset password sent to your register email",
+                message: "Reset password sent to your register email id successfully..!",
                 Url: url
             });
         }
@@ -116,35 +105,20 @@ module.exports.forgotPassword = (req, res) => {
 /**
  * @Purpose : For resetPassword 
 **/
-module.exports.resetPassword = (req, res) => {
-    userService.resetPassword(req.body, (err, data) => {
-        req.checkBody('password', 'password is not valid..!(Password length must be 5)').isLength({ min: 5 }).equals(req.body.confirmPassword);
-        /**
-         * @Purpose : Check the validation
-        **/
-        var errors = req.validationErrors();
-        var response = {};
-        if (errors) {
+exports.resetPassword = (req, res) => {
+    var response = {};
+    userService.resetPassword(req, (err, result) => {
+        if (err) {
             response.success = false;
-            response.error = errors;
-            return res.status(422).send({
-                status: false,
-                message: "Password and confirmpassword not match..!"
-            });
+            response.error = err;
+            res.status(500).send(response)
         }
         else {
-            if (err) {
-                response.success = false;
-                response.error = err;
-                res.status(500).send(response);
-            } else {
-                response.success = true;
-                response.data = data;
-                response.message = "Password updated Successfully";
-                res.status(200).send(response);
-            }
+            response.success = true;
+            response.result = result;
+            res.status(200).send(response);
         }
-    });
+    })
 }
 /**
  * @Purpose : Get all data

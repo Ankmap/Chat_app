@@ -41,7 +41,7 @@ function hash(password) {
 }
 /**
  * @Purpose : For register a new account
- *            1)  A callback function is called at the completion of a given task.
+ *            1)  A callback function is called at the compconstion of a given task.
 **/
 usermodel.prototype.register = (body, callback) => {
     user.find({ 'email': body.email }, (err, data) => {
@@ -105,35 +105,33 @@ usermodel.prototype.login = (body, callback) => {
 /**
  * @Purpose : For forgotPassword
 **/
-usermodel.prototype.forgotPassword = (body, callback) => {
-    /**
-     * @Purpose : Store body.email in email1
-    **/
-    var email1 = body.email
-    user.find({ "email": email1 }, (err, data) => {
-        //   console.log(data);
-        var response = {}
-        if (err) {
-            response ={
-                status : false,
-                message :'Invalid User'
-            }
-            return callback(response);
-        } else{
-            return callback(null, data)
+usermodel.prototype.forgotPassword=(data,callback)=>{
+    user.findOne({"email":data.email},(err,result)=>{
+        if(err) {
+            return callback(err);
         }
-    });
+        else {
+            if(result!==null && data.email==result.email) {
+                return callback(null,result);
+            }
+            else {
+                return callback("Please enter register email id only..!")
+            }
+        }
+    })
 }
 /**
  * @Purpose : For resetPassword
 **/
-usermodel.prototype.resetPassword = (body, callback) => {
-    newPassword = hash(body.password);
-    user.updateOne({user_id: body._id }, { password: newPassword }, function (err, result) {
+usermodel.prototype.resetPassword = (req, callback) => {
+    const newPassword = bcrypt.hashSync(req.body.password, saltRounds);
+    console.log(('newPassword =====>', newPassword));
+    user.updateOne({ _id: req.decoded.payload.user_id }, { password: newPassword }, (err, result) => {
         if (err) {
             return callback(err);
-        } else {
-            return callback(null,result);
+        }
+        else {
+            return callback(null, result);
         }
     })
 }

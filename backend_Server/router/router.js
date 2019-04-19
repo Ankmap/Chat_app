@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 var chatController = require("../controller/chatController");
 const controller = require('../controller/controller');
-
+const authentication = require('../authentication/decode')
 try {
     /**
      * @Purpose : Registration
@@ -22,7 +22,7 @@ try {
     /**
      * @Purpose : ResetPassword
      **/
-    router.post('/resetPassword',controller.resetPassword);
+    router.post('/resetPassword/:token',authentication.checkToken,controller.resetPassword);
     /**
      * @Purpose : get data
      **/

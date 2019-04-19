@@ -7,7 +7,7 @@ try {
                 console.log('Err : Backend Chat controller',err);
                 return callback(err);
             } else {
-                console.log('Result : Backend Chat controller');
+                console.log('\n Result : Backend Chat controller\n');
                 return callback(null, data);
             }
         });

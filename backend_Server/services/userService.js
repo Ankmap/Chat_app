@@ -30,14 +30,14 @@ exports.login = (req, callback) => {
 /**
  * @Purpose : For forgotPassword
 **/
-exports.forgotPassword = (req, callback) => {
-    userModel.forgotPassword(req, (err, data) => {
-        if (err) {
-            return callback(err);
-        } else {
-            return callback(null, data);
+exports.forgotPassword=(data,callback)=>{
+    userModel.forgotPassword(data,(err,result)=>{
+        if(err){
+            callback(err);
+        }else {
+            callback(null,result)
         }
-    });
+    })
 }
 /**
  * @Purpose : For resetPassword

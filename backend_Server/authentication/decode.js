@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+
 try {
     exports.checkToken =(req,res,next)=>{
         var token = req.headers['token'];
