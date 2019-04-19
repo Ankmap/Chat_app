@@ -1,9 +1,26 @@
 * {
   box-sizing: border-box;
 }
-h2, h3{
+h1{
   text-align: center;
   font-weight: bold;
+  font-style: italic;
+  font-size: 250%;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+}
+h2{
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 150%;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+}
+h3{
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 180%;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
 }
 hr{ 
   height: 1px;
@@ -12,7 +29,7 @@ hr{
   border: none;
 }
 header {
-  background-color:#16a085;
+  background: url(/assets/bg1.jpg) repeat 0 0;
   padding: 1px;
   text-align: center;
   font-size: 100%;
@@ -20,7 +37,7 @@ header {
   border: groove;
 }
 .left {
-  background-color:lightgrey;
+  background: url(/assets/bg1.jpg) repeat 0 0;
   float: left;
   padding: 20px;
   width: 30%;
@@ -29,8 +46,12 @@ header {
   overflow: scroll;
   border: 1px  groove;
 }
+.left img{
+  position: relative;
+
+}
 .right {
-  background-color:lightgrey;
+  background: url(/assets/bg2.jpg) repeat 0 0;
   float: left;
   padding: 20px;
   width: 70%;
@@ -53,6 +74,8 @@ header {
 }
 
 .user .chatMsg {
+  box-shadow: 10px 10px 5px #aaaaaa;
+
   background-color:lightgreen;
   text-align:center;
   border: groove 2px;
@@ -66,6 +89,8 @@ header {
 }
 
 .self .chatMsg {
+  box-shadow: 10px 10px 5px #aaaaaa;
+
   background-color:lightskyblue;
   text-align:center;
   border: groove 2px;
@@ -76,6 +101,15 @@ header {
   text-align: right;
   word-wrap: break-word;
   border-radius: 25px 25px 0px 25px;
+}
+.username{
+  background: url(/assets/bg1.jpg) repeat 0 0;
+  border: groove 2px;
+  width:100%;
+  padding:10px;
+  text-align: center;
+  word-wrap: break-word;
+  border-radius: 25px 25px 25px 25px;
 }
 ::placeholder {
   color: black;
@@ -89,9 +123,16 @@ header {
   position: relative;
 }
 .bottom textarea {
+  /* background: url(/assets/bg1.jpg) repeat 0 0 !important; */
   width: 100%;
-  height: 12%;
+  height: 15%;
   box-sizing: border-box;
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.07);
+  border-color: -moz-use-text-color #FFFFFF
 }
 .bottom button {
   position: absolute;
@@ -102,12 +143,13 @@ header {
 }
 .name p{
   margin-left: 10%; 
-  font-size: 120%;
+  font-size: 150%;
 }
 .name p:hover{
-  /* background-color: white; */
-  color: teal;
+  color: white;
+  font-size: 20px;
 }
 .name1 p{
   font-size: 150%;
+  text-align: center;
 }

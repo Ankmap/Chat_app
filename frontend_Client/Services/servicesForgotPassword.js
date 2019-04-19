@@ -1,3 +1,10 @@
+/*****************************************************************************************************
+ *@Purpose -Chatapp.
+ *@file    - ServicesForgotPassword.js
+ *@author  - Ankita Mapari <mapariit@gmail.com>
+ *@version - 1.0
+ *@since   - 2/04/2019
+ **************************************************************************************************/
 //console.log('army_love')
 app.service('servicesForgotPassword', function ($http, $location) {
     //console.log('armylo00ve')

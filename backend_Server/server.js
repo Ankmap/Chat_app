@@ -1,3 +1,10 @@
+/*****************************************************************************************************
+ *@Purpose -Chatapp.
+ *@file    - server.js
+ *@author  - Ankita Mapari <mapariit@gmail.com>
+ *@Since   - 2/04/2019
+ **************************************************************************************************/
+/*-----------------------------------------Required file express, bodyParser, ExpressValidator--------------------------------------------------*/
 /**
  * @Purpose : express is node.js web application framework
  **/
@@ -15,27 +22,13 @@ app.use(bodyParser.json());
  **/
 var expressValidator = require('express-validator')
 app.use(expressValidator());
+/*-----------------------------------------Connection with Mongodb--------------------------------------------------*/
+
 /**
  * @Purpose : Mongoose manages relationships between data, provides schema validation, and 
  *            used to translate between objects in code and represent objects in MongoDB.
  **/
 const mongoose = require('mongoose');
-/**
- * @Purpose : Calling router
- **/
-const route = require('../backend_Server/router/router');
-app.use('/', route);
-/**
- * @Purpose : Connection with frontend_Client
- **/
-app.use(express.static('../frontend_Client'));
-
-/**
- * @Purpose : Connection with server
- **/
-var server = app.listen(3000, () => {
-    console.log("\n Server is listening to port 3000");
-})
 /**
  * @Purpose : Connection to the mongo database
  **/
@@ -48,28 +41,49 @@ mongoose.connect(dbConfig.url, {
     console.log("Could not connect to the database....Start mongod\n Sudo service mongod start..!");
     process.exit();
 });
-/*-----------------------------------------Socket Connection --------------------------------------------------*/
+/*-----------------------------------------Connection with server--------------------------------------------------*/
+/**
+ * @Purpose : Connection with server
+ **/
+var server = app.listen(3000, () => {
+    console.log("\n Server is listening to port 3000");
+})
+/*-----------------------------------------Calling router and frontend connection--------------------------------------------------*/
+/**
+ * @Purpose : Calling router
+ **/
+const route = require('../backend_Server/router/router');
+app.use('/', route);
+/**
+ * @Purpose : Connection with frontend_Client
+ **/
+app.use(express.static('../frontend_Client'));
 
+/*-----------------------------------------Socket Connection --------------------------------------------------*/
+/**
+ * @Purpose :CORS uses additional HTTP headers to tell a browser to let a web application 
+ * is running at one origin (domain) and have permission to access selected resources 
+ * from a server at a different origin.
+ **/ 
 const cors = require('cors');
 app.use(cors())
-//data communication
-const http = require('http'); 
-const io = require('socket.io')(server);
+const http = require('http');
+
 /**
- * @purpose : Required file
- **/ 
+ * @purpose : Required file chatController to add message
+ **/
 var chatController = require('./controller/chatController');
+const io = require('socket.io')(server);
 io.on('connection', function (socket) {
     console.log("\n --------------------- Socket is connected now ---------------------");
     socket.on('createMessage', function (message) {
         chatController.message(message, (err, data) => {
             if (err) {
-                console.log("Error in sending message:",err);
+                console.log("Error in sending message:", err);
             } else {
-                // chatapp.chatinfos(data.senderUserId,data.senderName,data.receiverUserId,data.receiverName,data.message,data.date);
                 io.emit('newMessageSingle', data);
             }
-        })
+        });
         socket.on('disconnect', function () {
             console.log("\n ================ Socket is disconnected now ================")
         });

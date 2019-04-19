@@ -1,3 +1,10 @@
+/*****************************************************************************************************
+ *@Purpose -Chatapp.
+ *@file    - controllerForgotPassword.js
+ *@author  - Ankita Mapari <mapariit@gmail.com>
+ *@version - 1.0
+ *@since   - 2/04/2019
+ **************************************************************************************************/
 //console.log('csk')
 app.controller('controlForgotPassword', function ($scope, servicesForgotPassword) {
     //console.log('csk_love')

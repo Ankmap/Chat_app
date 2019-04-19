@@ -1,5 +1,13 @@
-app.controller('controlRestPassword', function ($scope, servicesResetPassword) {
+/*****************************************************************************************************
+ *@Purpose -Chatapp.
+ *@file    - controllerResetPassword.js
+ *@author  - Ankita Mapari <mapariit@gmail.com>
+ *@version - 1.0
+ *@since   - 2/04/2019
+ **************************************************************************************************/
+app.controller('controlRestPassword', function ($scope,$stateParams, servicesResetPassword) {
     // console.log('army ');
+    console.log($stateParams.token)
     $scope.resetPassword = function () {
         var user = {
             'password': $scope.password,
@@ -35,7 +43,7 @@ app.controller('controlRestPassword', function ($scope, servicesResetPassword) {
             $scope.message = "password and confirm password not match ";
             alert('password and confirm password not match ');
         } else {
-            servicesResetPassword.resetPassword(user, $scope);
+            servicesResetPassword.resetPassword(user, $scope,$stateParams.token);
         }
     }
 });

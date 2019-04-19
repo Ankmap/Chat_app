@@ -1,3 +1,10 @@
+/*****************************************************************************************************
+ *@Purpose -Chatapp.
+ *@file    - chatServices.js
+ *@author  - Ankita Mapari <mapariit@gmail.com>
+ *@version - 1.0
+ *@since   - 2/04/2019
+ **************************************************************************************************/
 app.service('chatServices', function ($http) {
     try {
         this.getAllUsers = function ($scope, usertoken) {

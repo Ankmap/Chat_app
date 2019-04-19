@@ -1,3 +1,10 @@
+/*****************************************************************************************************
+ *@Purpose -Chatapp.
+ *@file    - controllerRegister.js
+ *@author  - Ankita Mapari <mapariit@gmail.com>
+ *@version - 1.0
+ *@since   - 2/04/2019
+ **************************************************************************************************/
 // console.log('check control Reg1');
 app.controller('controlregistrationForm', function ($scope, servicesRegistration ) {
 //    console.log('check control Reg2');

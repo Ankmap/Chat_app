@@ -1,3 +1,10 @@
+/*****************************************************************************************************
+ *@Purpose -Chatapp.
+ *@file    - ServicesRegistartion.js
+ *@author  - Ankita Mapari <mapariit@gmail.com>
+ *@version - 1.0
+ *@since   - 2/04/2019
+ **************************************************************************************************/
 app.service('servicesRegistration', function ($http, $location) {
     console.log('check service  Reg1');
     this.registrationForm = function (data, $scope) {

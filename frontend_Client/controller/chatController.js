@@ -1,3 +1,10 @@
+/*****************************************************************************************************
+ *@Purpose -Chatapp.
+ *@file    - chatController.js
+ *@author  - Ankita Mapari <mapariit@gmail.com>
+ *@version - 1.0
+ *@since   - 2/04/2019
+ **************************************************************************************************/
 app.controller('chatController', function ($scope, SocketService, $state, chatServices) {
     $scope.message = '';
     $scope.allUserArr = [];
@@ -8,9 +15,7 @@ app.controller('chatController', function ($scope, SocketService, $state, chatSe
     console.log("$scope.receiverUserName---->",$scope.receiverUserName);
     var token = localStorage.getItem("token");
     console.log(token);
-    /**
-     * @Purpose : if the token is null then redirects to login page
-     **/
+
     try {
         SocketService.on('newMessageSingle', (message) => {
             if (localStorage.getItem('userid') == message.senderUserId || (localStorage.getItem('userid') == message.receiverUserId && localStorage.getItem('ruserId') == message.senderUserId)) {

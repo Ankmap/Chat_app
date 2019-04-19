@@ -1,3 +1,10 @@
+/*****************************************************************************************************
+ *@Purpose -Chatapp.
+ *@file    - ServicesLogin.js
+ *@author  - Ankita Mapari <mapariit@gmail.com>
+ *@version - 1.0
+ *@since   - 2/04/2019
+ **************************************************************************************************/
 app.service('servicesLogin', function ($http, $location) {
     // console.log('army_love')
     this.login = function (data, $scope) {

@@ -1,3 +1,10 @@
+/*****************************************************************************************************
+ *@Purpose -Chatapp.
+ *@file    - user.model.js
+ *@author  - Ankita Mapari <mapariit@gmail.com>
+ *@version - 1.0
+ *@since   - 2/04/2019
+ **************************************************************************************************/
 /**
  * @Purpose : 1) Required file
  *            2) Mongoose is an Object Data Modeling (ODM) library for MongoDB and Node.js. 

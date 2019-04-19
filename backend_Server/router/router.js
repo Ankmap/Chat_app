@@ -1,3 +1,10 @@
+/*****************************************************************************************************
+ *@Purpose -Chatapp.
+ *@file    - router.js
+ *@author  - Ankita Mapari <mapariit@gmail.com>
+ *@version - 1.0
+ *@since   - 2/04/2019
+ **************************************************************************************************/
 /**
  * @Purpose : Create a router.js file to store all routes
  */
@@ -22,7 +29,7 @@ try {
     /**
      * @Purpose : ResetPassword
      **/
-    router.post('/resetPassword/:token',authentication.checkToken,controller.resetPassword);
+    router.post('/resetPassword',authentication.checkToken,controller.resetPassword);
     /**
      * @Purpose : get data
      **/
